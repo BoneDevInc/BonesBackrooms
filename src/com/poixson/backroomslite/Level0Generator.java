@@ -5,9 +5,15 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Lightable;
-import org.bukkit.block.data.type.Slab;
+
+
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 
@@ -24,12 +30,12 @@ public class Level0Generator extends ChunkGenerator {
 	public static final double THRESH_WALL_L = 0.38;
 	public static final double THRESH_WALL_H = 0.5;
 
-	public static final Material LOBBY_WALL     = Material.YELLOW_TERRACOTTA;
+	public static final Material LOBBY_WALL     = Material.SAND;
 	public static final Material LOBBY_SUBFLOOR = Material.OAK_PLANKS;
-	public static final Material LOBBY_CARPET   = Material.LIGHT_GRAY_WOOL;
+	public static final Material LOBBY_CARPET   = Material.STRIPPED_BIRCH_WOOD;
 
 	protected final int level_y = 80;
-	protected final int level_h = 5;
+	protected final int level_h = 4;
 
 	// noise
 	protected final FastNoiseLiteD noiseLobbyWalls;
@@ -39,7 +45,7 @@ public class Level0Generator extends ChunkGenerator {
 	public Level0Generator() {
 		// lobby walls
 		this.noiseLobbyWalls = new FastNoiseLiteD();
-		this.noiseLobbyWalls.setFrequency(0.022);
+		this.noiseLobbyWalls.setFrequency(0.050); //0.022
 		this.noiseLobbyWalls.setFractalOctaves(2);
 		this.noiseLobbyWalls.setFractalGain(0.1);
 		this.noiseLobbyWalls.setFractalLacunarity(0.4);
@@ -71,7 +77,9 @@ public class Level0Generator extends ChunkGenerator {
 				chunk.setBlock(x, cy+2,         z, Material.BEDROCK);
 				if (isWall) {
 					for (int iy=1; iy<wh; iy++) {
-						chunk.setBlock(x, this.level_y+iy, z, LOBBY_WALL);
+						if (iy==2) {chunk.setBlock(x,this.level_y+iy,z,Material.CUT_SANDSTONE);} else {
+							chunk.setBlock(x, this.level_y+iy, z, LOBBY_WALL);
+						}
 					}
 				} else {
 					chunk.setBlock(x, this.level_y+1, z, LOBBY_CARPET);
@@ -79,17 +87,10 @@ public class Level0Generator extends ChunkGenerator {
 					final int  modZ7 = (zz < 0 ? 0-zz : zz) % 7;
 					if (modZ7 == 0 && modX7 < 2) {
 						// ceiling lights
-						chunk.setBlock(x, cy, z, Material.REDSTONE_LAMP);
-						final BlockData block = chunk.getBlockData(x, cy, z);
-						((Lightable)block).setLit(true);
-						chunk.setBlock(x, cy,   z, block);
-						chunk.setBlock(x, cy+1, z, Material.REDSTONE_BLOCK);
+						chunk.setBlock(x, cy, z, Material.OCHRE_FROGLIGHT);
 					} else {
 						// ceiling
-						chunk.setBlock(x, cy, z, Material.SMOOTH_STONE_SLAB);
-						final Slab slab = (Slab) chunk.getBlockData(x, cy, z);
-						slab.setType(Slab.Type.TOP);
-						chunk.setBlock(x, cy,   z, slab);
+						chunk.setBlock(x, cy, z, Material.STRIPPED_BIRCH_LOG);
 						chunk.setBlock(x, cy+1, z, Material.STONE);
 					}
 				}

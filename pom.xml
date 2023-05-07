@@ -118,16 +118,7 @@
 			</plugin>
 
 			<!-- Eclipse Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>${maven-eclipse-plugin-version}</version>
-				<configuration>
-					<projectNameTemplate>${project.name}</projectNameTemplate>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
+
 
 			<!-- Commit-ID Plugin -->
 			<plugin>
@@ -196,14 +187,16 @@
 		<dependency>
 			<artifactId>common-core</artifactId>
 			<groupId>com.poixson</groupId>
-			<version>${common-core-version}</version>
-			<scope>provided</scope>
+			<version>4.0.15-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}\resources\pxnJCommon-Core-4.0.15-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<artifactId>common-plugin-mc</artifactId>
 			<groupId>com.poixson</groupId>
-			<version>${common-plugin-mc-version}</version>
-			<scope>provided</scope>
+			<version>4.0.19</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}\resources\pxnCommonPluginMC-4.0.19.jar</systemPath>
 		</dependency>
 		<dependency>
 			<artifactId>Multiverse-Core</artifactId>
